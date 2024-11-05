@@ -32,10 +32,12 @@ php artisan key:generate
 php artisan serve
 ```
 
-### Contribuidores
+<div align="center">
+<h3> Contribuidores
 <br> 👨‍💻 Marcos Willian
 <br> 👩‍💻 Maria Eduarda F.
 <br> 👨‍💻 Werbeton
 <br> 👩‍💻 Vicencya
 <br> 👩‍💻 Maria Eduarda C.
 <br> 👩‍💻 Naiely
+</div>
