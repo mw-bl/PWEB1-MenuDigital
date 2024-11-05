@@ -2,7 +2,7 @@
 <img width="300" src="https://github.com/user-attachments/assets/38a0c9d1-41cd-474d-81b8-258bbb68a710">
 </div>
 
-# GoMenu
+# GoMenu - Nosso menu digital!
 
 ## Para rodar o projeto, siga esses passos:
 
@@ -31,3 +31,11 @@ php artisan key:generate
 ```
 php artisan serve
 ```
+
+### Contribuidores
+<br> 👨‍💻 Marcos Willian
+<br> 👩‍💻 Maria Eduarda F.
+<br> 👨‍💻 Werbeton
+<br> 👩‍💻 Vicencya
+<br> 👩‍💻 Maria Eduarda C.
+<br> 👩‍💻 Naiely
