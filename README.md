@@ -34,10 +34,7 @@ php artisan serve
 
 <div align="center">
 <h3> Contribuidores
-<br> 👨‍💻 Marcos Willian
-<br> 👩‍💻 Maria Eduarda F.
-<br> 👨‍💻 Werbeton
-<br> 👩‍💻 Vicencya
-<br> 👩‍💻 Maria Eduarda C.
-<br> 👩‍💻 Naiely
+<br><br> 👨‍💻 Marcos Willian 👩‍💻 Maria Eduarda F.
+<br> 👨‍💻 Werbeton 👩‍💻 Vicencya
+<br> 👩‍💻 Maria Eduarda C. 👩‍💻 Naiely
 </div>
