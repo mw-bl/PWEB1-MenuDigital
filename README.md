@@ -9,7 +9,7 @@ composer self-update
 composer install
 ```
 
-### Renomeie o arquivo .env.example para .env e ajuste as configurações do bano de dados.
+### Renomeie o arquivo ``.env.example`` para ``.env`` e ajuste as configurações do bano de dados.
 
 ### Para executar as migrations, execute no terminal:
 ```
