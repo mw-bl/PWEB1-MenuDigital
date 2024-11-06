@@ -26,6 +26,6 @@ class Cardapio extends Model
 
     public function itens()
     {
-        return $this->belongsToMany(Itens_Cardapio::class, 'pertence', 'fk_Cardapio_id_cardapio', 'fk_Itens_Cardapio_id_item_cardapio');
+        return $this->belongsToMany(ItensCardapio::class, 'pertence', 'fk_Cardapio_id_cardapio', 'fk_Itens_Cardapio_id_item_cardapio');
     }
 }
