@@ -157,7 +157,7 @@
                 <!-- Senha -->
                 <div class="mb-3 input-group">
                     <input type="password" class="form-control" id="senha" name="senha" placeholder="" required>
-                    <span class="input-group-text material-icons">lockp</span>
+                    <span class="input-group-text material-icons">lock</span>
                 </div>
 
                 <!-- Botão de Cadastro -->
