@@ -3,128 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Login de Empresa</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <<link rel="stylesheet" href="app.css"><!-- Seu CSS -->
     <!-- Custom CSS -->
     <style>
-        /* Full-page flex container */
+        /* Same styles from the registration page */
         body, html {
             height: 100%;
             margin: 0;
             display: flex;
             align-items: center;
             background-color: #D92621;
+            font-family: Arial, sans-serif;
         }
 
-        /* Flex container for left and right sections */
         .main-container {
             display: flex;
             width: 100%;
             height: 100%;
         }
 
-        /* Left section for image */
         .left-section {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            background-color: #D92621;
         }
 
-        /* Right section for form */
         .right-section {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             padding: 2rem;
+            background-color: #D92621;
         }
 
-        /* Image styling */
         .left-section img {
             max-width: 80%;
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
-        /* Card styling */
         .card {
-            border-radius: 40px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
             padding: 2rem;
             max-width: 500px;
-            width: 550px;
-            height: 600px;
+            width: 100%;
             margin-right: 10rem;
-        }
-
-        /* Input styling */
-        .input-group  {
-            height: 50px; /* Slightly larger input */
-            border: 2px solid #000; /* Black border */
-            border-radius: 50px; 
-            padding-left: 40px; /* Space for icon */
-        }
-        .form-control{
-            height: 45px; /* Slightly larger input */
-            background: transparent;
-            padding-left: 10px;
-            border: none;
-            border-radius: 50px 50px; 
-        }
-
-        .input-group .input-group-text {
-            background: transparent;
-            border: none;
-            color: black;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            left: 10px; /* Positioning the icon inside the input */
-            height: 50px; /* Match input height */
-            pointer-events: none; /* Prevent clicks on the icon */
-            transition: opacity 0.3s; /* Transition for fading out */
-            border-radius: 0 4px 4px 0;
-            
-        }
-
-        /* Hide the icon when input is focused or has value */
-        .form-control:focus + .input-group-text,
-        .form-control:not(:placeholder-shown) + .input-group-text {
-            opacity: 0; /* Fade out the icon */
-        }
-
-        /* Button styling */
-        .btn-primary {
-            background-color: #3f51b5;
-            border: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #303f9f;
-        }
-
-        /* Label styling */
-        .form-label {
-            color: black;
-            font-weight: 500;
+            background-color: #FFFFFF;
         }
 
         .form-header {
-            font-size: 5rem;
-            color: black;
+            font-size: 2.5rem;
+            color: #333333;
             font-weight: bold;
-            margin-bottom: 1rem;
-            font-family: 'Neulis', sans-serif;
-            
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            height: 50px;
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            padding-left: 3rem;
+            font-size: 1rem;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #D92621;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .input-group .input-group-text {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            color: black;
+        }
+
+        .btn-primary {
+            background-color: #D92621;
+            border: none;
+            border-radius: 40px;
+            transition: background-color 0.3s ease;
+            width: 200px !important;
+            height: 60px;
+            font-size: 1rem;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .btn-primary:hover {
+            background-color: #D92621;
+        }
+
+        .link-register {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .link-register a {
+            color: #D92621;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link-register a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -133,37 +138,38 @@
 <div class="main-container">
     <!-- Left section with image -->
     <div class="left-section">
-        <img src="/imagem_telas_de_login.png" alt="Imagem ilustrativa">
+        <img src="{{ asset('imagem_telas_de_login.png') }}" alt="Imagem ilustrativa da empresa">
     </div>
 
-    <!-- Right section with form -->
+    <!-- Right section with login form -->
     <div class="right-section">
         <div class="card">
-            <div class="form-header text-center">LogIn</div>
+            <div class="form-header text-center">Login</div>
             <form action="{{ route('empresa.login') }}" method="POST">
                 @csrf
-                <!-- Nome -->
-                <div class="mb-3 input-group">
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="" required>
-                    <span class="input-group-text material-icons">person</span>
-                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <!-- Email -->
                 <div class="mb-3 input-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                     <span class="input-group-text material-icons">email</span>
                 </div>
 
                 <!-- Senha -->
                 <div class="mb-3 input-group">
-                    <input type="password" class="form-control" id="senha" name="senha" placeholder="" required>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
                     <span class="input-group-text material-icons">lock</span>
                 </div>
 
-                <!-- Botão de Cadastro -->
+                <!-- Botão de Login -->
                 <button type="submit" class="btn btn-primary w-100 mt-4">
-                    <span class="material-icons align-middle">person_add</span> Cadastrar
+                    <span class="material-icons align-middle">login</span> Entrar
                 </button>
+
+                <!-- Link para a página de cadastro -->
+                <div class="link-register">
+                    <p>Não tem uma conta? <a href="{{ route('empresa.cadastro') }}">Cadastre-se aqui</a></p>
+                </div>
             </form>
         </div>
     </div>
