@@ -27,3 +27,13 @@ Route::prefix('cardapio')->group(function () {
     Route::delete('/{id}', [CardapioController::class, 'destroy'])->name('cardapio.destroy');
 });
 
+Route::prefix('itens-cardapio')->group(function () {
+    Route::get('/', [ItensCardapioController::class, 'index'])->name('itens_cardapio.index');
+    Route::get('/create', [ItensCardapioController::class, 'create'])->name('itens_cardapio.create');
+    Route::post('/', [ItensCardapioController::class, 'store'])->name('itens_cardapio.store');
+    Route::get('/{id}', [ItensCardapioController::class, 'show'])->name('itens_cardapio.show');
+    Route::get('/{id}/edit', [ItensCardapioController::class, 'edit'])->name('itens_cardapio.edit');
+    Route::put('/{id}', [ItensCardapioController::class, 'update'])->name('itens_cardapio.update');
+    Route::delete('/{id}', [ItensCardapioController::class, 'destroy'])->name('itens_cardapio.destroy');
+});
+
