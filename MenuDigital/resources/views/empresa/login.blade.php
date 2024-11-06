@@ -140,7 +140,7 @@
     <div class="right-section">
         <div class="card">
             <div class="form-header text-center">LogIn</div>
-            <form method="POST" action="/register">
+            <form action="{{ route('empresa.login') }}" method="POST">
                 @csrf
                 <!-- Nome -->
                 <div class="mb-3 input-group">

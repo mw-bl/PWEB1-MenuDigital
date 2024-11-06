@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EmpresaController extends Controller
 {
@@ -13,30 +15,34 @@ class EmpresaController extends Controller
         return view('empresa.cadastro');
     }
 
-    // Método para armazenar a empresa no banco
-    public function store(Request $request)
+    // Método para exibir o formulário de login
+    public function loginForm()
+    {
+        return view('empresa.login');
+    }
+
+    // Método para autenticar a empresa
+    public function login(Request $request)
     {
         // Validação dos dados
         $request->validate([
-            'nome' => 'required',
-            'cnpj' => 'required|unique:empresas',
             'email' => 'required|email',
-            'telefone' => 'required',
-            'endereco' => 'required',
-            'senha' => 'required|min:6|confirmed',
+            'senha' => 'required',
         ]);
 
-        // Criar e salvar a nova empresa
-        Empresa::create([
-            'nome' => $request->nome,
-            'cnpj' => $request->cnpj,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'endereco' => $request->endereco,
-            'senha' => bcrypt($request->senha),
-        ]);
+        // Procurar a empresa pelo email
+        $empresa = Empresa::where('email', $request->email)->first();
 
-        // Redirecionar ou retornar uma resposta
-        return redirect()->route('empresa.cadastro')->with('status', 'Empresa cadastrada com sucesso!');
+        // Verificar se a empresa existe e a senha está correta
+        if ($empresa && Hash::check($request->senha, $empresa->senha)) {
+            // Login bem-sucedido, armazenar a empresa na sessão
+            Auth::login($empresa);
+
+            // Redirecionar para a página desejada após o login
+            return redirect()->route('dashboard')->with('status', 'Login realizado com sucesso!');
+        }
+
+        // Redirecionar de volta com erro se falhar
+        return back()->with('error', 'Credenciais inválidas');
     }
 }

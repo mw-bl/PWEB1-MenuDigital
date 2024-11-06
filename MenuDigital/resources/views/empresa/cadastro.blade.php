@@ -102,7 +102,7 @@
             border: none;
             background: none;
             font-size: 1.5rem;
-            color: #888888;
+            color: black;
         }
 
         /* Button styling */
