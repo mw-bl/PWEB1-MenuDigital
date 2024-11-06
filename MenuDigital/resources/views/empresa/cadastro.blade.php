@@ -57,7 +57,7 @@
             padding: 2rem;
             max-width: 500px;
             width: 550px;
-            height: 700px;
+            height: auto;
             margin-right: 10rem;
         }
 
@@ -129,15 +129,17 @@
 <div class="main-container">
     <!-- Left section with image -->
     <div class="left-section">
-        <img src="/imagem_empresa.png" alt="Imagem ilustrativa da empresa">
+    <img src="{{ asset('imagem_telas_de_login.png') }}" alt="Imagem ilustrativa da empresa">
+
     </div>
 
     <!-- Right section with form -->
     <div class="right-section">
         <div class="card">
-            <div class="form-header text-center">Cadastro de Empresa</div>
-            <form method="POST" action="/empresa/register">
+            <div class="form-header text-center">Registro</div>
+            <form action="{{ route('empresa.store') }}" method="POST">
                 @csrf
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <!-- Nome -->
                 <div class="mb-3 input-group">
                     <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome da Empresa" required>
@@ -171,6 +173,12 @@
                 <!-- Senha -->
                 <div class="mb-3 input-group">
                     <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
+                    <span class="input-group-text material-icons">lock</span>
+                </div>
+
+                <!-- Confirmar Senha -->
+                <div class="mb-3 input-group">
+                    <input type="password" class="form-control" id="senha_confirmation" name="senha_confirmation" placeholder="Confirmar Senha" required>
                     <span class="input-group-text material-icons">lock</span>
                 </div>
 

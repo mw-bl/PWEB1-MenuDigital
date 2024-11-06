@@ -7,35 +7,36 @@ use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
 {
-    public function index()
+    // Método para exibir o formulário de cadastro
+    public function cadastro()
     {
-        $empresas = Empresa::all();
-        return response()->json($empresas);
+        return view('empresa.cadastro');
     }
 
+    // Método para armazenar a empresa no banco
     public function store(Request $request)
     {
-        $empresa = Empresa::create($request->all());
-        return response()->json($empresa, 201);
-    }
+        // Validação dos dados
+        $request->validate([
+            'nome' => 'required',
+            'cnpj' => 'required|unique:empresas',
+            'email' => 'required|email',
+            'telefone' => 'required',
+            'endereco' => 'required',
+            'senha' => 'required|min:6|confirmed',
+        ]);
 
-    public function show($id)
-    {
-        $empresa = Empresa::findOrFail($id);
-        return response()->json($empresa);
-    }
+        // Criar e salvar a nova empresa
+        Empresa::create([
+            'nome' => $request->nome,
+            'cnpj' => $request->cnpj,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'endereco' => $request->endereco,
+            'senha' => bcrypt($request->senha),
+        ]);
 
-    public function update(Request $request, $id)
-    {
-        $empresa = Empresa::findOrFail($id);
-        $empresa->update($request->all());
-        return response()->json($empresa);
-    }
-
-    public function destroy($id)
-    {
-        Empresa::destroy($id);
-        return response()->json(['message' => 'Empresa deletada com sucesso']);
+        // Redirecionar ou retornar uma resposta
+        return redirect()->route('empresa.cadastro')->with('status', 'Empresa cadastrada com sucesso!');
     }
 }
-
