@@ -17,6 +17,7 @@
             display: flex;
             align-items: center;
             background-color: #D92621;
+            font-family: Arial, sans-serif;
         }
 
         /* Flex container for left and right sections */
@@ -33,6 +34,7 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            background-color: #D92621;
         }
 
         /* Right section for form */
@@ -42,85 +44,85 @@
             align-items: center;
             justify-content: flex-end;
             padding: 2rem;
+            background-color: #D92621;
         }
 
         /* Image styling */
         .left-section img {
             max-width: 80%;
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         /* Card styling */
         .card {
-            border-radius: 40px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
             padding: 2rem;
             max-width: 500px;
-            width: 550px;
-            height: auto;
+            width: 100%;
             margin-right: 10rem;
+            background-color: #FFFFFF;
         }
 
-        /* Input styling */
-        .input-group {
-            height: 50px;
-            border: 2px solid #000;
-            border-radius: 50px;
-            padding-left: 40px;
+        /* Form header styling */
+        .form-header {
+            font-size: 2.5rem;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
         }
-        .form-control{
-            height: 45px;
-            background: transparent;
-            padding-left: 10px;
-            border: none;
-            border-radius: 50px 50px;
+
+        /* Input group styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            height: 50px;
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            padding-left: 3rem;
+            font-size: 1rem;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #3f51b5;
+            box-shadow: none;
+            outline: none;
         }
 
         .input-group .input-group-text {
-            background: transparent;
-            border: none;
-            color: black;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: absolute;
             left: 10px;
-            height: 50px;
-            pointer-events: none;
-            transition: opacity 0.3s;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .form-control:focus + .input-group-text,
-        .form-control:not(:placeholder-shown) + .input-group-text {
-            opacity: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            color: #888888;
         }
 
         /* Button styling */
         .btn-primary {
             background-color: #3f51b5;
             border: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
+            border-radius: 10px;
+            height: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
         }
 
         .btn-primary:hover {
             background-color: #303f9f;
-        }
-
-        /* Label styling */
-        .form-label {
-            color: black;
-            font-weight: 500;
-        }
-
-        .form-header {
-            font-size: 3rem;
-            color: black;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            font-family: 'Neulis', sans-serif;
         }
     </style>
 </head>
