@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Itens_Cardapio extends Model
+class ItensCardapio extends Model
 {
     use HasFactory;
 

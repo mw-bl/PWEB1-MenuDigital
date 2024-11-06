@@ -2,71 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Empresa;
+use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
 {
-    // Cadastro de uma nova empresa
-    public function cadastrarEmpresa(Request $request)
+    public function index()
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'endereco' => 'required|string|max:255',
-            'email' => 'required|email|unique:empresas,email',
-            'telefone' => 'required|string',
-            'cnpj' => 'required|string|unique:empresas,cnpj',
-            'metodos_pagamento' => 'required|string'
-        ]);
+        $empresas = Empresa::all();
+        return response()->json($empresas);
+    }
 
+    public function store(Request $request)
+    {
         $empresa = Empresa::create($request->all());
-        
-        
-        return response()->json(['message' => 'Empresa cadastrada com sucesso!', 'empresa' => $empresa], 201);
+        return response()->json($empresa, 201);
     }
 
-    public function atualizarEmpresa(Request $request, $id)
+    public function show($id)
     {
         $empresa = Empresa::findOrFail($id);
+        return response()->json($empresa);
+    }
 
-        $request->validate([
-            'nome' => 'string|max:255',
-            'endereco' => 'string|max:255',
-            'email' => 'email|unique:empresas,email,' . $id,
-            'telefone' => 'string',
-            'cnpj' => 'string|unique:empresas,cnpj,' . $id,
-            'metodos_pagamento' => 'string'
-        ]);
-
+    public function update(Request $request, $id)
+    {
+        $empresa = Empresa::findOrFail($id);
         $empresa->update($request->all());
-        
-        return response()->json(['message' => 'Empresa atualizada com sucesso!', 'empresa' => $empresa], 200);
+        return response()->json($empresa);
     }
 
-    public function deletarEmpresa($id)
+    public function destroy($id)
     {
-        $empresa = Empresa::findOrFail($id);
-        $empresa->delete();
-
-        return response()->json(['message' => 'Empresa deletada com sucesso!'], 200);
-    }
-
-
-    public function listarEmpresas(Request $request)
-    {
-        $empresas = Empresa::query();
-
-        if ($request->has('filtro')) {
-            $empresas->where('nome', 'like', '%' . $request->filtro . '%');
-        }
-
-        return response()->json(['empresas' => $empresas->get()], 200);
-    }
-
-    public function visualizarEmpresa($id)
-    {
-        $empresa = Empresa::findOrFail($id);
-        
-        return response()->json(['empresa' => $empresa], 200);
+        Empresa::destroy($id);
+        return response()->json(['message' => 'Empresa deletada com sucesso']);
     }
 }
+
