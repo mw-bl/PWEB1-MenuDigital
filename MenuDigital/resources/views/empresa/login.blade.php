@@ -57,6 +57,14 @@
             width: 100%;
             margin-right: 10rem;
             background-color: #FFFFFF;
+           
+        }
+
+        .card h1 {
+            font-size: 4rem;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
         }
 
         .form-header {
@@ -105,7 +113,8 @@
             transition: background-color 0.3s ease;
             width: 200px !important;
             height: 60px;
-            font-size: 1rem;
+            font-size: 2rem;
+            font-weight: bolder;
             padding: 0.5rem;
             display: flex;
             align-items: center;
@@ -144,7 +153,7 @@
     <!-- Right section with login form -->
     <div class="right-section">
         <div class="card">
-            <div class="form-header text-center">Login</div>
+            <div class="form-header text-center"><h1>LogIn</h1></div>
             <form action="{{ route('empresa.login') }}" method="POST">
                 @csrf
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -163,7 +172,7 @@
 
                 <!-- Botão de Login -->
                 <button type="submit" class="btn btn-primary w-100 mt-4">
-                    <span class="material-icons align-middle">login</span> Entrar
+                    <span class=""></span> Entrar
                 </button>
 
                 <!-- Link para a página de cadastro -->

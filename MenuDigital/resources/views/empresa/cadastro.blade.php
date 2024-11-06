@@ -64,6 +64,13 @@
             background-color: #FFFFFF;
         }
 
+        .card h1 {
+            font-size: 3rem;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
         /* Form header styling */
         .form-header {
             font-size: 2.5rem;
@@ -113,7 +120,8 @@
             transition: background-color 0.3s ease;
             width: 200px !important; /* Força a largura */
             height: 60px;
-            font-size: 1rem;
+            font-size: 2rem;
+            font-weight: bolder;
             padding: 0.5rem;
             display: flex;
             align-items: center;
@@ -124,6 +132,22 @@
         .btn-primary:hover {
             background-color: #D92621;
         }
+
+        /* Button for login link */
+        .btn-secondary {
+            background-color: transparent;
+            border: none;
+            color: #D92621;
+            text-decoration: underline;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: block;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            color: #C21E1B;
+        }
     </style>
 </head>
 <body>
@@ -131,14 +155,13 @@
 <div class="main-container">
     <!-- Left section with image -->
     <div class="left-section">
-    <img src="{{ asset('imagem_telas_de_login.png') }}" alt="Imagem ilustrativa da empresa">
-
+        <img src="{{ asset('imagem_telas_de_login.png') }}" alt="Imagem ilustrativa da empresa">
     </div>
 
     <!-- Right section with form -->
     <div class="right-section">
         <div class="card">
-            <div class="form-header text-center">Registro</div>
+            <div class="form-header text-center"><h1>Registro</h1></div>
             <form action="{{ route('empresa.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -186,9 +209,12 @@
 
                 <!-- Botão de Cadastro -->
                 <button type="submit" class="btn btn-primary w-100 mt-4">
-                    <span class="material-icons align-middle">person_add</span> Cadastrar
+                    <span class=""></span> Registrar
                 </button>
             </form>
+
+            <!-- Botão para página de login -->
+            <a href="{{ route('empresa.login') }}" class="btn-secondary">Já possui uma conta? Ir para Login</a>
         </div>
     </div>
 </div>
