@@ -103,16 +103,23 @@
             background: none;
             font-size: 1.5rem;
             color: #888888;
+            
         }
 
         /* Button styling */
         .btn-primary {
             background-color: #D92621;
             border: none;
-            border-radius: 4px;
+            border-radius: 40px;
             transition: background-color 0.3s ease;
+            width: 200px !important; /* Força a largura */
             height: 60px;
-            
+            font-size: 1rem;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto; /* Centraliza o botão */
         }
 
         .btn-primary:hover {
