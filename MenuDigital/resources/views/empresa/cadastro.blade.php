@@ -89,7 +89,7 @@
         }
 
         .form-control:focus {
-            border-color: #3f51b5;
+            border-color: #D92621;
             box-shadow: none;
             outline: none;
         }
