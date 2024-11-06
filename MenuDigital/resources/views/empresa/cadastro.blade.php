@@ -99,14 +99,16 @@
 
         /* Button styling */
         .btn-primary {
-            background-color: #3f51b5;
+            background-color: #D92621;
             border: none;
             border-radius: 4px;
             transition: background-color 0.3s ease;
+            height: 60px;
+            
         }
 
         .btn-primary:hover {
-            background-color: #303f9f;
+            background-color: #D92621;
         }
 
         /* Label styling */
