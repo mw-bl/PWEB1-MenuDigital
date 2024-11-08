@@ -6,11 +6,9 @@
     <title>Login de Empresa</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Custom CSS -->
     <style>
-        /* Same styles from the registration page */
+        /* Estilos principais */
         body, html {
             height: 100%;
             margin: 0;
@@ -39,7 +37,7 @@
             flex: 1;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
             padding: 2rem;
             background-color: #D92621;
         }
@@ -55,35 +53,21 @@
             padding: 2rem;
             max-width: 500px;
             width: 100%;
-            margin-right: 10rem;
             background-color: #FFFFFF;
-           
         }
 
         .card h1 {
-            font-size: 4rem;
+            font-size: 2rem;
             color: #333333;
             font-weight: bold;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-header {
-            font-size: 2.5rem;
-            color: #333333;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-control {
             height: 50px;
             border: 2px solid #E0E0E0;
             border-radius: 10px;
-            padding-left: 3rem;
+            padding-left: 1rem;
             font-size: 1rem;
             color: #333333;
             transition: border-color 0.3s;
@@ -95,35 +79,24 @@
             outline: none;
         }
 
-        .input-group .input-group-text {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: none;
-            font-size: 1.5rem;
-            color: black;
-        }
-
         .btn-primary {
             background-color: #D92621;
             border: none;
             border-radius: 40px;
             transition: background-color 0.3s ease;
-            width: 200px !important;
-            height: 60px;
-            font-size: 2rem;
-            font-weight: bolder;
+            width: 100%;
+            height: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
             padding: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
+            margin-top: 1rem;
         }
 
         .btn-primary:hover {
-            background-color: #D92621;
+            background-color: #B71C1C;
         }
 
         .link-register {
@@ -153,33 +126,43 @@
     <!-- Right section with login form -->
     <div class="right-section">
         <div class="card">
-            <div class="form-header text-center"><h1>LogIn</h1></div>
+            <h1 class="text-center">Login</h1>
+
+            <!-- Exibe mensagens de sucesso -->
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <!-- Exibe mensagens de erro -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('empresa.login') }}" method="POST">
                 @csrf
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                <!-- Email -->
-                <div class="mb-3 input-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                    <span class="input-group-text material-icons">email</span>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
                 </div>
-
-                <!-- Senha -->
-                <div class="mb-3 input-group">
-                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
-                    <span class="input-group-text material-icons">lock</span>
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" required>
                 </div>
-
-                <!-- Botão de Login -->
-                <button type="submit" class="btn btn-primary w-100 mt-4">
-                    <span class=""></span> Entrar
-                </button>
-
-                <!-- Link para a página de cadastro -->
-                <div class="link-register">
-                    <p>Não tem uma conta? <a href="{{ route('empresa.cadastro') }}">Cadastre-se aqui</a></p>
-                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
             </form>
+
+            <!-- Link para a página de cadastro -->
+            <div class="link-register">
+    <p>Não tem uma conta? <a href="{{ route('empresa.cadastro') }}">Cadastre-se aqui</a></p>
+</div>
         </div>
     </div>
 </div>
