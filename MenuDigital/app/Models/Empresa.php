@@ -24,6 +24,6 @@ class Empresa extends Model
 
     public function cardapios()
     {
-        return $this->hasMany(Cardapio::class, 'fk_Empresa_id_empresa');
+        return $this->hasMany(Cardapio::class);
     }
 }

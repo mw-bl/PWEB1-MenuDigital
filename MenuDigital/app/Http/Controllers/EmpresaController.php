@@ -15,6 +15,33 @@ class EmpresaController extends Controller
         return view('empresa.cadastro');
     }
 
+    // Método para armazenar a empresa no banco
+    public function store(Request $request)
+    {
+        // Validação dos dados
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'cnpj' => 'required|string|max:14|unique:empresas',
+            'email' => 'required|email|max:255|unique:empresas',
+            'telefone' => 'required|string|max:15',
+            'endereco' => 'required|string|max:255',
+            'senha' => 'required|string|min:8|confirmed',
+        ]);
+
+        // Criar e salvar a nova empresa
+        Empresa::create([
+            'nome' => $request->nome,
+            'cnpj' => $request->cnpj,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'endereco' => $request->endereco,
+            'senha' => Hash::make($request->senha),
+        ]);
+
+        // Redirecionar ou retornar uma resposta
+        return redirect()->route('empresa.cadastro')->with('status', 'Empresa cadastrada com sucesso!');
+    }
+
     // Método para exibir o formulário de login
     public function loginForm()
     {
@@ -30,19 +57,17 @@ class EmpresaController extends Controller
             'senha' => 'required',
         ]);
 
-        // Procurar a empresa pelo email
-        $empresa = Empresa::where('email', $request->email)->first();
-
-        // Verificar se a empresa existe e a senha está correta
-        if ($empresa && Hash::check($request->senha, $empresa->senha)) {
-            // Login bem-sucedido, armazenar a empresa na sessão
-            Auth::login($empresa);
-
-            // Redirecionar para a página desejada após o login
-            return redirect()->route('dashboard')->with('status', 'Login realizado com sucesso!');
+        // Tentativa de autenticação
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->senha])) {
+            // Autenticação bem-sucedida
+            return redirect()->intended('dashboard');
         }
 
-        // Redirecionar de volta com erro se falhar
-        return back()->with('error', 'Credenciais inválidas');
+        // Autenticação falhou
+        return back()->withErrors([
+            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+        ]);
     }
+
+    
 }

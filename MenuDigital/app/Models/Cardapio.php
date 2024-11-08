@@ -9,7 +9,7 @@ class Cardapio extends Model
 {
     use HasFactory;
 
-    protected $table = 'cardapio';
+    protected $table = 'cardapios';
 
     protected $primaryKey = 'id_cardapio';
 
@@ -21,7 +21,7 @@ class Cardapio extends Model
 
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class, 'fk_Empresa_id_empresa');
+        return $this->belongsTo(Empresa::class); // Um cardápio pertence a uma empresa
     }
 
     public function itens()
