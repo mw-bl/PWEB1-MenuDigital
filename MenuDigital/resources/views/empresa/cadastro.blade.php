@@ -162,36 +162,55 @@
     <div class="right-section">
         <div class="card">
             <div class="form-header text-center"><h1>Registro</h1></div>
+
+            <!-- Exibe mensagens de sucesso -->
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <!-- Exibe mensagens de erro -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('empresa.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <!-- Nome -->
                 <div class="mb-3 input-group">
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome da Empresa" required>
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome da Empresa" value="{{ old('nome') }}" required>
                     <span class="input-group-text material-icons">business</span>
                 </div>
 
                 <!-- CNPJ -->
                 <div class="mb-3 input-group">
-                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" required>
+                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}" required>
                     <span class="input-group-text material-icons">account_balance</span>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3 input-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
                     <span class="input-group-text material-icons">email</span>
                 </div>
 
                 <!-- Telefone -->
                 <div class="mb-3 input-group">
-                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Telefone" required>
+                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Telefone" value="{{ old('telefone') }}" required>
                     <span class="input-group-text material-icons">phone</span>
                 </div>
 
                 <!-- Endereço -->
                 <div class="mb-3 input-group">
-                    <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço" required>
+                    <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço" value="{{ old('endereco') }}" required>
                     <span class="input-group-text material-icons">location_on</span>
                 </div>
 
@@ -214,7 +233,7 @@
             </form>
 
             <!-- Botão para página de login -->
-            <a href="{{ route('empresa.login') }}" class="btn-secondary">Já possui uma conta? Ir para Login</a>
+            <a href="{{ route('login') }}" class="btn-secondary">Já possui uma conta? Ir para Login</a>
         </div>
     </div>
 </div>
