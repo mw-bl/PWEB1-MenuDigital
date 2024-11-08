@@ -10,10 +10,11 @@ Route::get('/', function () {
 
 // Rotas para Empresa
 
-Route::get('/cadastro', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
-Route::post('/cadastro', [EmpresaController::class, 'store'])->name('empresa.store');
-Route::get('/login', [EmpresaController::class, 'loginForm'])->name('empresa.loginForm');
+Route::get('/empresa/cadastro', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
+Route::post('/empresa/cadastro', [EmpresaController::class, 'store'])->name('empresa.store');
+Route::get('/login', [EmpresaController::class, 'loginForm'])->name('login');
 Route::post('/login', [EmpresaController::class, 'login'])->name('empresa.login');
+Route::post('/logout', [EmpresaController::class, 'destroy'])->name('empresa.logout');
 
 
 // Rotas para Cardapio
