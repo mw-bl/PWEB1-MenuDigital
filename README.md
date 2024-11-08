@@ -15,7 +15,7 @@ composer self-update
 composer install
 ```
 
-### 2. Faça uma cópia do arquivo ``.env.example``, e renomeie essa cópia para ``.env`` e ajuste as configurações do bano de dados.
+### 2. Faça uma cópia do arquivo ``.env.example``, e renomeie essa cópia para ``.env`` e ajuste as configurações do banco de dados.
 
 ### 3. Para executar as migrations, execute no terminal:
 ```
