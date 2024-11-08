@@ -8,15 +8,67 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <style>
+        /* Configuração geral de cores e fontes */
         body {
             padding-top: 20px;
             font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        h1, h2, h3 {
+            color: #333;
         }
         .container {
             max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .btn-primary {
+            background-color: #0066cc;
+            border-color: #0066cc;
+        }
+        .btn-primary:hover {
+            background-color: #004c99;
+            border-color: #004c99;
+        }
+        .btn-secondary {
+            background-color: #6c757d; /* Cor cinza para o botão "Adicionar Item" */
+            color: #fff;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Cor cinza mais escura ao passar o mouse */
+            border-color: #545b62;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .table thead {
+            background-color: #0066cc;
+            color: #ffffff;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        /* Estilo para cada item */
         .item {
             margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .item:hover {
+            background-color: #e9f5ff;
+            border-color: #007bff;
+            transition: all 0.3s ease;
+        }
+        /* Efeito de hover nos cards de cardápios existentes */
+        .table tbody tr:hover {
+            background-color: #e9f5ff;
+            transition: background-color 0.3s;
         }
     </style>
 </head>
