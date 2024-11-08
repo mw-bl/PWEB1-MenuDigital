@@ -1,8 +1,8 @@
 <div align="center">
-<img width="300" src="https://github.com/user-attachments/assets/38a0c9d1-41cd-474d-81b8-258bbb68a710">
+<img width="300" src="https://github.com/user-attachments/assets/9a6ea2b7-8677-4096-9f23-386f7dc79340">
 </div>
 
-# GoMenu - Nosso menu digital!
+# GoMenu - Descubra, Escolha e Saboreie!
 
 ## Para rodar o projeto, siga esses passos:
 
