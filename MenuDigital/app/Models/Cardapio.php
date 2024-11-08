@@ -21,11 +21,11 @@ class Cardapio extends Model
 
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class); // Um cardápio pertence a uma empresa
+        return $this->belongsTo(Empresa::class, 'fk_Empresa_id_empresa');
     }
 
     public function itens()
     {
-        return $this->belongsToMany(ItensCardapio::class, 'pertence', 'fk_Cardapio_id_cardapio', 'fk_Itens_Cardapio_id_item_cardapio');
+        return $this->hasMany(ItensCardapio::class, 'fk_Cardapio_id_cardapio');
     }
 }

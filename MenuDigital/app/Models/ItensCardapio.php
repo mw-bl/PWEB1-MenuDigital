@@ -18,10 +18,11 @@ class ItensCardapio extends Model
         'descricao',
         'preco',
         'link_imagem_itens',
+        'fk_Cardapio_id_cardapio',
     ];
 
-    public function cardapios()
+    public function cardapio()
     {
-        return $this->belongsToMany(Cardapio::class, 'pertence', 'fk_Itens_Cardapio_id_item_cardapio', 'fk_Cardapio_id_cardapio');
+        return $this->belongsTo(Cardapio::class, 'fk_Cardapio_id_cardapio');
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class EmpresaController extends Controller
 {
@@ -25,7 +26,7 @@ class EmpresaController extends Controller
             'email' => 'required|email|max:255|unique:empresas',
             'telefone' => 'required|string|max:15',
             'endereco' => 'required|string|max:255',
-            'senha' => 'required|string|min:8|confirmed',
+            'senha' => 'required|string|min:3|confirmed',
         ]);
 
         // Criar e salvar a nova empresa
@@ -38,8 +39,8 @@ class EmpresaController extends Controller
             'senha' => Hash::make($request->senha),
         ]);
 
-        // Redirecionar ou retornar uma resposta
-        return redirect()->route('empresa.cadastro')->with('status', 'Empresa cadastrada com sucesso!');
+        // Redirecionar para a página de gerenciamento e criação de cardápios
+        return redirect()->route('cardapio.manageAndCreate')->with('success', 'Empresa cadastrada com sucesso!');
     }
 
     // Método para exibir o formulário de login
@@ -55,19 +56,32 @@ class EmpresaController extends Controller
         $request->validate([
             'email' => 'required|email',
             'senha' => 'required',
-        ]);
+        ], [
+            'email.required' => 'Esse campo de email é obrigatório',
+            'email.email' => 'Esse campo tem que ter um email válido',
+            'password.required' => 'Esse campo password é obrigatório',
+            // 'password.min' => 'Esse campo tem que ter no mínimo :min caracteres'
+          ]);
 
-        // Tentativa de autenticação
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->senha])) {
-            // Autenticação bem-sucedida
-            return redirect()->intended('dashboard');
-        }
+          $empresa = Empresa::where('email', $request->input('email'))->first();
 
-        // Autenticação falhou
-        return back()->withErrors([
-            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
-        ]);
+          if (!$empresa) {
+            return redirect()->route('empresa.login')->withErrors(['error' => 'Email or password invalid']);
+          }
+
+          if (!Hash::check($request->input('senha'), $empresa->senha)) {
+            return redirect()->route('empresa.login')->withErrors(['error' => 'Email or password invalid']);
+          }
+
+          Auth::loginUsingId($empresa->id_empresa);
+
+          return redirect()->route('cardapio.manageAndCreate')->with('success', 'Logged in');
     }
 
-    
+    public function destroy()
+  {
+    Auth::logout();
+
+    return redirect()->route('empresa.login');
+  }
 }
