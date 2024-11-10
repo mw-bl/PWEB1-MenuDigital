@@ -12,9 +12,11 @@ class CreateCardapiosTable extends Migration
             $table->id('id_cardapio');
             $table->string('descricao')->notNullable();
             $table->string('imagem')->nullable();
-            $table->foreignId('fk_empresa_id_empresa')->constrained('empresas', 'id_empresa')->onDelete('restrict');
+            $table->foreignId('fk_Empresa_id_empresa')->constrained('empresas', 'id_empresa')->onDelete('restrict');
+
             $table->timestamps();
         });
+        
     }
 
     public function down()

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
+
+
 use function Laravel\Prompts\search;
 
 class CardapioController extends Controller
@@ -36,18 +38,74 @@ class CardapioController extends Controller
        
     }*/
 
-    public function index()
-    {
-        try {
-            $cardapios = Cardapio::with('itens', 'empresa')->get();
-            return view('paginaPrincipal', compact('cardapios'));
-        } catch (\Exception $e) {
-            Log::error('Erro ao carregar a página principal: ' . $e->getMessage());
-            return response()->json(['error' => 'Erro ao carregar a página principal.'], 500);
+    public function getItens($id)
+{
+    $cardapio = Cardapio::with('itens')->find($id);
+    
+    
+
+    if (!$cardapio) {
+        return response()->json(['message' => 'Cardápio não encontrado.'], 404);
+    }
+
+    return response()->json(['itens' => $cardapio->itens]);
+}
+
+
+
+    
+public function index()
+{
+    // Carrega os cardápios com os itens e as empresas associadas
+    $cardapios = Cardapio::with(['empresa', 'itens'])->get();
+
+    // Passa os dados para a view
+    return view('welcome', compact('cardapios'));
+}
+
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'descricao' => 'required|string|max:500',
+        'imagem' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+        'nome_produto.*' => 'required|string|max:500',
+        'descricao_produto.*' => 'required|string|max:500',
+        'preco.*' => 'required|numeric',
+        'imagem_itens.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+    ]);
+
+    $empresaId = Auth::user()->id_empresa;
+
+    // Upload da imagem do cardápio
+    $imagePath = $request->file('imagem')->store('cardapios', 'public');
+
+    // Cria o cardápio
+    $cardapio = Cardapio::create([
+        'descricao' => $request->descricao,
+        'imagem' => $imagePath,
+        'fk_Empresa_id_empresa' => $empresaId,
+    ]);
+
+    // Cria os itens do cardápio
+    if ($request->hasFile('imagem')) {
+        foreach ($request->file('imagem') as $index => $file) {
+            // Upload da imagem do item do cardápio
+            $itemImagePath = $file->store('itens_cardapio', 'public');
+
+            // Cria o item do cardápio
+            ItensCardapio::create([
+                'nome_produto' => $request->nome_produto[$index],
+                'descricao' => $request->descricao_produto[$index],
+                'preco' => $request->preco[$index],
+                'imagem' => $itemImagePath,
+                'fk_Cardapio_id_cardapio' => $cardapio->id_cardapio,
+            ]);
         }
     }
 
-    
+    return redirect()->route('cardapio.manageAndCreate')->with('success', 'Cardápio e itens criados com sucesso.');
+}
 
 
 
@@ -64,7 +122,7 @@ class CardapioController extends Controller
     // Método para exibir um cardápio específico
     public function show($id)
     {
-        $cardapio = Cardapio::with('itens')->findOrFail($id);
+        $cardapio = Cardapio::with('itens', 'empresa')->findOrFail($id);
         return view('cardapio.show', compact('cardapio'));
     }
 
@@ -76,7 +134,7 @@ class CardapioController extends Controller
     {
         $request->validate([
             'descricao' => 'required|string|max:500',
-            'imagem' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
         ]);
 
         $cardapio = Cardapio::findOrFail($id);
@@ -93,55 +151,9 @@ class CardapioController extends Controller
         return redirect()->route('cardapio.manageAndCreate')->with('success', 'Cardápio atualizado com sucesso.');
     }
 
-    // Método para excluir um cardápio
-    
+// Método para excluir um cardápio
 
-    // Método para armazenar um novo cardápio
-    public function store(Request $request)
-    {
-        $request->validate([
-            'descricao' => 'required|string|max:500',
-            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:10000',
-            'nome_produto.*' => 'required|string|max:500',
-            'descricao_produto.*' => 'required|string|max:500',
-            'preco.*' => 'required|numeric',
-            'imagem_itens.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
-
-        $empresaId = Auth::user()->id_empresa;
-
-        // Upload da imagem do cardápio
-        $imagePath = $request->file('imagem')->store('cardapios', 'public');
-
-        // Cria o cardápio
-        $cardapio = Cardapio::create([
-            'descricao' => $request->descricao,
-            'imagem' => $imagePath,
-            'fk_Empresa_id_empresa' => $empresaId,
-        ]);
-
-        // Cria os itens do cardápio
-        if ($request->hasFile('imagem_itens')) {
-            foreach ($request->file('imagem_itens') as $index => $file) {
-                // Upload da imagem do item do cardápio
-                $itemImagePath = $file->store('itens_cardapio', 'public');
-
-                // Cria o item do cardápio
-                ItensCardapio::create([
-                    'nome_produto' => $request->nome_produto[$index],
-                    'descricao' => $request->descricao_produto[$index],
-                    'preco' => $request->preco[$index],
-                    'imagem' => $itemImagePath,
-                    'fk_Cardapio_id_cardapio' => $cardapio->id_cardapio,
-                ]);
-            }
-        }
-
-        return redirect()->route('cardapio.manageAndCreate')->with('success', 'Cardápio e itens criados com sucesso.');
-    }
-    
-
-    public function destroy($id)
+public function destroy($id)
     {
         $cardapio = Cardapio::findOrFail($id);
         $cardapio->delete();
@@ -162,14 +174,14 @@ class CardapioController extends Controller
             'nome_produto.*' => 'required|string|max:500',
             'descricao_produto.*' => 'required|string|max:500',
             'preco.*' => 'required|numeric',
-            'magem.*' => 'required|image|mimes:jpeg,png,jpg|max:10000'
+            'imagem.*' => 'required|image|mimes:jpeg,png,jpg|max:10000' // Corrigido o nome do campo
         ]);
 
         $cardapio = Cardapio::findOrFail($id);
 
         // Adiciona os itens ao cardápio
         if ($request->hasFile('imagem')) {
-            foreach ($request->file('magem') as $index => $file) {
+            foreach ($request->file('imagem') as $index => $file) {
                 // Upload da imagem do item do cardápio
                 $itemImagePath = $file->store('itens_cardapio', 'public');
 
@@ -186,5 +198,4 @@ class CardapioController extends Controller
 
         return redirect()->route('cardapio.manageAndCreate', $id)->with('success', 'Itens adicionados com sucesso.');
     }
-
 }
