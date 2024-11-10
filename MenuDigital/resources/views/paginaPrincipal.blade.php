@@ -62,6 +62,7 @@
             align-items: center;
             margin-top: 50px;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .logo-img {
@@ -123,6 +124,44 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .menu {
+                margin-top: 10px;
+                flex-direction: column;
+            }
+
+            .menu a {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .logo-container {
+                flex-direction: column;
+            }
+
+            .logo-img, .main-img {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
         }
     </style>
 </head>

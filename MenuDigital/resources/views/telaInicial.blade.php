@@ -137,6 +137,40 @@
             transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .menu a {
+                margin: 5px 0;
+                text-align: center;
+            }
+
+            .hero-image img {
+                width: 100%;
+            }
+
+            .restaurant-list {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .restaurant-card {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -153,13 +187,11 @@
 
     <!-- Seção de logo e slogan -->
     <div class="logo">
-        <!-- Substitua "logo.png" pela URL ou caminho do logo da aplicação -->
         <img src="public/logo1.png" alt="Logo do GoMenu"> <!-- Coloque a imagem do logo -->
     </div>
 
     <!-- Seção de imagem principal -->
     <div class="hero-image">
-        <!-- Substitua "main-image.png" pela URL ou caminho da imagem principal -->
         <img src="public/pessoa1.png" alt="Imagem de destaque"> <!-- Coloque a imagem principal -->
     </div>
 
@@ -169,7 +201,6 @@
         <div class="restaurant-list">
             <!-- Cartão do restaurante 1 -->
             <div class="restaurant-card">
-                <!-- Substitua "restaurant1.jpg" pela URL ou caminho da imagem do restaurante -->
                 <img src="public/telaInicial/lesPresidents.png" alt="Imagem do restaurante 1"> <!-- Coloque a imagem do restaurante 1 -->
                 <h3>Restaurante 1</h3>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum obcaecati ipsa unde eveniet harum voluptatum assumenda labore repudiandae consequatur sunt perferendis, tempore magni odit accusantium nam, delectus aliquid excepturi officia.</p>
