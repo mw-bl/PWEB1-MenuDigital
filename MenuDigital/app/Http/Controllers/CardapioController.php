@@ -10,16 +10,14 @@ use Illuminate\Support\Facades\Storage;
 
 class CardapioController extends Controller
 {
-    // Exibe a página combinada de gerenciamento e criação de cardápios
     public function manageAndCreate()
     {
-        $empresaId = Auth::user()->id; // Assumindo que a empresa está logada
+        $empresaId = Auth::user()->id;
         $cardapios = Cardapio::where('fk_Empresa_id_empresa', $empresaId)->get();
         
         return view('cardapio.manage_and_create', compact('cardapios'));
     }
 
-    // Armazena o novo cardápio e seus itens
     public function store(Request $request)
     {
         $request->validate([
@@ -33,17 +31,14 @@ class CardapioController extends Controller
 
         $empresaId = Auth::user()->id;
 
-        // Upload da imagem do cardápio
         $imagePath = $request->file('link_imagem')->store('cardapios', 'public');
 
-        // Cria o cardápio
         $cardapio = Cardapio::create([
             'descricao' => $request->descricao,
             'link_imagem' => $imagePath,
             'fk_Empresa_id_empresa' => $empresaId,
         ]);
 
-        // Cria os itens do cardápio
         foreach ($request->nome_produto as $index => $nomeProduto) {
             $itemImagePath = $request->file('link_imagem_itens')[$index]->store('itens_cardapio', 'public');
             ItensCardapio::create([

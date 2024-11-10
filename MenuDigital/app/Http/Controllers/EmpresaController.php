@@ -10,16 +10,13 @@ use App\Models\User;
 
 class EmpresaController extends Controller
 {
-    // Método para exibir o formulário de cadastro
     public function cadastro()
     {
         return view('empresa.cadastro');
     }
 
-    // Método para armazenar a empresa no banco
     public function store(Request $request)
     {
-        // Validação dos dados
         $request->validate([
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:14|unique:empresas',
@@ -29,7 +26,6 @@ class EmpresaController extends Controller
             'senha' => 'required|string|min:3|confirmed',
         ]);
 
-        // Criar e salvar a nova empresa
         Empresa::create([
             'nome' => $request->nome,
             'cnpj' => $request->cnpj,
@@ -39,20 +35,16 @@ class EmpresaController extends Controller
             'senha' => Hash::make($request->senha),
         ]);
 
-        // Redirecionar para a página de gerenciamento e criação de cardápios
         return redirect()->route('cardapio.manageAndCreate')->with('success', 'Empresa cadastrada com sucesso!');
     }
 
-    // Método para exibir o formulário de login
     public function loginForm()
     {
         return view('empresa.login');
     }
 
-    // Método para autenticar a empresa
     public function login(Request $request)
     {
-        // Validação dos dados
         $request->validate([
             'email' => 'required|email',
             'senha' => 'required',
