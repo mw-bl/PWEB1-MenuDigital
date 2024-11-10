@@ -62,6 +62,7 @@
             align-items: center;
             margin-top: 50px;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .logo-img {
@@ -78,6 +79,44 @@
             width: 100%;
             height: auto;
             cursor: pointer;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .menu {
+                margin-top: 10px;
+                flex-direction: column;
+            }
+
+            .menu a {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .logo-container {
+                flex-direction: column;
+            }
+
+            .logo-img, .main-img {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -121,7 +160,7 @@
         @elseif(isset($cardapios))
             <div class="row">
                 @foreach($cardapios as $cardapio)
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 col-sm-6 mb-4">
                         <div class="card">
                             <img src="{{ asset('storage/' . $cardapio->imagem) }}" class="card-img-top cardapio-img" alt="{{ $cardapio->descricao }}" data-toggle="modal" data-target="#modalCardapio{{ $cardapio->id_cardapio }}">
                             <div class="card-body">
