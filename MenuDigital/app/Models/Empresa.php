@@ -30,6 +30,6 @@ class Empresa extends Model implements AuthenticatableContract
 
     public function cardapios()
     {
-        return $this->hasMany(Cardapio::class, 'fk_Empresa_id_empresa');
+        return $this->hasMany(Cardapio::class, 'fk_Empresa_id_empresa', 'id_empresa');
     }
 }

@@ -15,17 +15,17 @@ class Cardapio extends Model
 
     protected $fillable = [
         'descricao',
-        'link_imagem',
+        'imagem',
         'fk_Empresa_id_empresa',
     ];
 
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class, 'fk_Empresa_id_empresa');
+        return $this->belongsTo(Empresa::class, 'fk_Empresa_id_empresa', 'id_empresa');
     }
 
     public function itens()
     {
-        return $this->hasMany(ItensCardapio::class, 'fk_Cardapio_id_cardapio');
+        return $this->hasMany(ItensCardapio::class, 'fk_Cardapio_id_cardapio', 'id_cardapio');
     }
 }

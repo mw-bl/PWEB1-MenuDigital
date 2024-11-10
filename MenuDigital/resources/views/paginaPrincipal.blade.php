@@ -34,28 +34,6 @@
             align-items: center;
         }
 
-        /* Barra de pesquisa */
-        .menu .search-input {
-            position: relative;
-            width: 400px;
-        }
-
-        .menu .search-input input[type="text"] {
-            width: 100%;
-            padding: 5px 30px 5px 10px;
-            border-radius: 50px;
-            border: 1px solid #ddd;
-        }
-
-        .menu .search-input .fa-search {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            color: black;
-            pointer-events: none;
-        }
-
         .menu a {
             background-color: #ff0000;
             color: #fff;
@@ -95,6 +73,12 @@
             width: 44rem;
             height: auto;
         }
+
+        .cardapio-img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -104,13 +88,6 @@
             <img src="{{ asset('logo2.png') }}" alt="Imagem ilustrativa da empresa">
         </div>
         <div class="menu">
-            <!-- Barra de pesquisa com ícone interno -->
-            <div class="search-input">
-                <form action="{{ route('cardapio.pesquisa') }}" method="GET">
-                    <input type="text" name="query" placeholder="Buscar empresas ou cardápios">
-                    <i class="fas fa-search"></i>
-                </form>
-            </div>
             <!-- Botões de navegação -->
             <a href="{{ route('empresa.login') }}">Entrar</a>
             <a href="{{ route('empresa.cadastro') }}">Cadastrar Empresa</a>
@@ -123,11 +100,67 @@
         <img class="main-img" src="{{ asset('pessoa1.png') }}" alt="Imagem ilustrativa da empresa">
     </div>
 
-    <!-- Seção de restaurantes -->
-    
+    <div class="container mt-5">
+        <!-- Mensagens de Sucesso e Erro -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <h2>Todos os Cardápios</h2>
+
+        @if(isset($cardapios) && $cardapios->isEmpty())
+            <p>Nenhum cardápio encontrado.</p>
+        @elseif(isset($cardapios))
+            <div class="row">
+                @foreach($cardapios as $cardapio)
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ asset('storage/' . $cardapio->imagem) }}" class="card-img-top cardapio-img" alt="{{ $cardapio->descricao }}" data-toggle="modal" data-target="#modalCardapio{{ $cardapio->id_cardapio }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $cardapio->descricao }}</h5>
+                                <p class="card-text">{{ $cardapio->empresa ? $cardapio->empresa->nome : 'Empresa não encontrada' }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalCardapio{{ $cardapio->id_cardapio }}" tabindex="-1" role="dialog" aria-labelledby="modalCardapioLabel{{ $cardapio->id_cardapio }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalCardapioLabel{{ $cardapio->id_cardapio }}">{{ $cardapio->descricao }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        @foreach($cardapio->itens as $item)
+                                            <li>{{ $item->nome_produto }} - R$ {{ number_format($item->preco, 2, ',', '.') }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
 
     <!-- Scripts do Bootstrap e FontAwesome -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

@@ -10,19 +10,18 @@ class ItensCardapio extends Model
     use HasFactory;
 
     protected $table = 'itens_cardapio';
-
-    protected $primaryKey = 'id_item_cardapio';
+    protected $primaryKey = 'id_item';
 
     protected $fillable = [
         'nome_produto',
         'descricao',
         'preco',
-        'link_imagem_itens',
+        'imagem',
         'fk_Cardapio_id_cardapio',
     ];
 
     public function cardapio()
     {
-        return $this->belongsTo(Cardapio::class, 'fk_Cardapio_id_cardapio');
+        return $this->belongsTo(Cardapio::class, 'fk_Cardapio_id_cardapio', 'id_cardapio');
     }
 }
