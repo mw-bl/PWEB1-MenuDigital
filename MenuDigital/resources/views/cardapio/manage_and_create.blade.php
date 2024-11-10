@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <style>
-        /* Configuração geral de cores e fontes */
         body {
             padding-top: 20px;
             font-family: Arial, sans-serif;
@@ -33,7 +32,40 @@
             border-color: #004c99;
         }
         .btn-secondary {
-            background-color: #6c757d; /* Cor cinza para o botão "Adicionar Item" */
+            background-color: #6c757d;
+            color: #fff;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .table thead {
+            background-color: #0066cc;
+            color: #ffffff;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .item:hover {
+            background-color: #e9f5ff;
+            border-color: #007bff;
+            transition: all 0.3s ease;
+        }
+        .table tbody tr:hover {
+            background-color: #e9f5ff;
+            transition: background-color 0.3s;
         }
     </style>
 </head>
@@ -92,6 +124,7 @@
         <button type="button" class="btn btn-secondary" id="add-item">Adicionar Item</button>
         <button type="submit" class="btn btn-primary">Criar Cardápio</button>
     </form>
+    <br>
 
     <!-- Lista de cardápios existentes -->
     <h2>Cardápios Existentes</h2>
