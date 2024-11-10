@@ -26,6 +26,7 @@ Route::get('/login', [EmpresaController::class, 'loginForm'])->name('login');
 Route::post('/login', [EmpresaController::class, 'login'])->name('empresa.login');
 Route::post('/logout', [EmpresaController::class, 'destroy'])->name('empresa.logout');
 Route::get('/cardapios', [CardapioController::class, 'index'])->name('cardapios.index');
+Route::get('/cadastro', [CardapioController::class, 'index'])->name('empresa.store');
 
 // Rota para buscar itens do cardápio
 Route::get('/cardapio-itens/{id}', [CardapioController::class, 'getItens']);
