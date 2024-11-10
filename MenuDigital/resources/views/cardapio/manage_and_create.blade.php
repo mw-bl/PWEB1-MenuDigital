@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar e Criar Cardápios</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <style>
-        /* Configuração geral de cores e fontes */
         body {
             padding-top: 20px;
             font-family: Arial, sans-serif;
@@ -33,12 +30,12 @@
             border-color: #004c99;
         }
         .btn-secondary {
-            background-color: #6c757d; /* Cor cinza para o botão "Adicionar Item" */
+            background-color: #6c757d;
             color: #fff;
             border-color: #6c757d;
         }
         .btn-secondary:hover {
-            background-color: #5a6268; /* Cor cinza mais escura ao passar o mouse */
+            background-color: #5a6268;
             border-color: #545b62;
         }
         .form-label {
@@ -70,6 +67,36 @@
             background-color: #e9f5ff;
             transition: background-color 0.3s;
         }
+
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+            .table thead {
+                display: none;
+            }
+            .table, .table tbody, .table tr, .table td {
+                display: block;
+                width: 100%;
+            }
+            .table td {
+                padding: 10px;
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+            .table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+            }
+            .btn {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -81,7 +108,6 @@
         </div>
     @endif
 
-    <!-- Formulário para criar um novo cardápio -->
     <h2>Criar Novo Cardápio</h2>
     <form action="{{ route('cardapio.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -118,7 +144,6 @@
         <button type="submit" class="btn btn-primary">Criar Cardápio</button>
     </form>
 
-    <!-- Lista de cardápios existentes -->
     <h2>Cardápios Existentes</h2>
     <table class="table">
         <thead>
@@ -131,9 +156,9 @@
         <tbody>
             @foreach ($cardapios as $cardapio)
                 <tr>
-                    <td>{{ $cardapio->descricao }}</td>
-                    <td><img src="{{ asset('storage/' . $cardapio->link_imagem) }}" alt="Imagem do Cardápio" width="100"></td>
-                    <td>
+                    <td data-label="Descrição">{{ $cardapio->descricao }}</td>
+                    <td data-label="Imagem"><img src="{{ asset('storage/' . $cardapio->link_imagem) }}" alt="Imagem do Cardápio" width="100"></td>
+                    <td data-label="Ações">
                         <a href="{{ route('cardapio.show', $cardapio->id_cardapio) }}" class="btn btn-info">Ver</a>
                         <a href="{{ route('cardapio.edit', $cardapio->id_cardapio) }}" class="btn btn-warning">Editar</a>
                         <form action="{{ route('cardapio.destroy', $cardapio->id_cardapio) }}" method="POST" style="display:inline;">
@@ -155,7 +180,6 @@ document.getElementById('add-item').addEventListener('click', function() {
     container.appendChild(item);
 });
 </script>
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
