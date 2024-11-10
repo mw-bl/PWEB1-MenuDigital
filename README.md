@@ -6,6 +6,8 @@
 
 ## Para rodar o projeto, siga esses passos:
 
+### Antes de tudo [instale](https://laravel.com/docs/4.2) o composer e o laravel.
+
 ### 1. Depois do clone, abra a pasta do projeto no terminal ou ferramenta de sua escolha e execute os comandos:
 
 ```
