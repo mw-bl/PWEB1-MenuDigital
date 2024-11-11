@@ -16,7 +16,7 @@ class CardapioController extends Controller
     
 
     // Método para armazenar um novo cardápio
-    public function store(Request $request, $empresaId)
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'descricao' => 'required|string|max:500',
@@ -26,6 +26,8 @@ class CardapioController extends Controller
             'preco.*' => 'required|numeric',
             'imagem_itens.*' => 'required|image|mimes:jpeg,png,jpg|max:10000'
         ]);
+
+        $empresaId = Auth::user()->id_empresa;
 
         // Upload da imagem do cardápio
         $imagePath = $request->file('imagem')->store('cardapios', 'public');
@@ -55,18 +57,17 @@ class CardapioController extends Controller
         }
 
         return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresaId]);
-    }
 
+    }
 
     // Método para exibir a página de gerenciamento e criação de cardápios
     public function manageAndCreate()
-    {
-        $empresaId = Auth::user()->id_empresa; // Assumindo que a empresa está logada
-        $cardapios = Cardapio::where('fk_Empresa_id_empresa', $empresaId)->get();
-        
-        return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresaId]);
-
-    }
+{
+    $empresaId = Auth::user()->id_empresa;
+    $cardapios = Cardapio::where('fk_Empresa_id_empresa', $empresaId)->get();
+    
+    return view('cardapio.manage_and_create', compact('cardapios', 'empresaId'));
+}
 
     // Método para exibir um cardápio específico
     public function index()
@@ -130,10 +131,10 @@ class CardapioController extends Controller
                          ->with('success', 'Cardápio excluído com sucesso!');
     }
 
-    public function create($empresaId)
-    {
-        $empresa = Empresa::findOrFail($empresaId); // Usa 'id_empresa' como chave primária
-        return view('cardapio.create', compact('empresa'));
-    }
+   public function create($empresaId)
+{
+    $empresa = Empresa::findOrFail($empresaId); // Usa 'id_empresa' como chave primária
+    return view('cardapio.create', compact('empresa'));
+}
 
 }

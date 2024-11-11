@@ -3,11 +3,9 @@
 @section('content')
     <div class="container">
         <h2>Criar e Gerenciar Cardápio</h2>
-        
 
         <!-- Formulário de criação do cardápio -->
-        <form id="cardapio-form" action="{{ route('cardapio.store', ['empresaId' => $empresaId]) }}" method="POST" enctype="multipart/form-data"></form>
-
+        <form action="{{ isset($empresa) ? route('cardapio.store', ['empresaId' => $empresa->id_empresa]) : '#' }}" method="POST" enctype="multipart/form-data"></form>
             @csrf
 
             <!-- Nome do Cardápio -->

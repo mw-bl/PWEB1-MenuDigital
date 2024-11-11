@@ -65,6 +65,10 @@ class EmpresaController extends Controller
 
           $empresa = Empresa::where('email', $request->input('email'))->first();
 
+          if (!isset($empresa)) {
+            return redirect()->route('empresa.login')->withErrors(['error' => 'Email ou senha inválidos']);
+        }
+
           if (!$empresa) {
             return redirect()->route('empresa.login')->withErrors(['error' => 'Email or password invalid']);
           }
