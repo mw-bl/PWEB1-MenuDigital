@@ -5,7 +5,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\ItensCardapioController;
 
-Route::get('/', [CardapioController::class, 'index'])->name('paginaPrincipal');
+Route::get('/', [CardapioController::class, 'index'])->name('welcome');
 
 // Rotas para Empresa
 Route::get('/empresa/cadastro', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
