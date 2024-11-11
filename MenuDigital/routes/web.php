@@ -17,13 +17,14 @@ Route::post('/logout', [EmpresaController::class, 'destroy'])->name('empresa.log
 
 // Rotas para Cardapio
 Route::middleware(['auth'])->group(function () {
-    Route::get('/cardapio/manageAndCreate', [CardapioController::class, 'manageAndCreate'])->name('cardapio.manageAndCreate');
-    Route::get('/empresa/cardapios', [CardapioController::class, 'index'])->name('cardapio.index');
-    Route::post('/empresa/cardapios', [CardapioController::class, 'store'])->name('cardapio.store');
-    Route::get('/empresa/cardapios/{id}', [CardapioController::class, 'show'])->name('cardapio.show');
-    Route::get('/empresa/cardapios/{id}/edit', [CardapioController::class, 'edit'])->name('cardapio.edit');
-    Route::put('/empresa/cardapios/{id}', [CardapioController::class, 'update'])->name('cardapio.update');
-    Route::delete('/empresa/cardapios/{id}', [CardapioController::class, 'destroy'])->name('cardapio.destroy');
+    Route::get('/empresa/{empresaId}/cardapios', [CardapioController::class, 'index'])->name('cardapio.index');
+    Route::get('/empresa/{empresaId}/cardapio/create', [CardapioController::class, 'create'])->name('cardapio.create');
+    Route::post('/empresa/{empresaId}/cardapio', [CardapioController::class, 'store'])->name('cardapio.store');
+
+    Route::get('/empresa/{empresaId}/cardapio/{cardapioId}/edit', [CardapioController::class, 'edit'])->name('cardapio.edit');
+    Route::put('/empresa/{empresaId}/cardapios/{cardapioId}', [CardapioController::class, 'update'])->name('cardapio.update');
+    Route::delete('/empresa/{empresaId}/cardapio/{cardapioId}', [CardapioController::class, 'destroy'])->name('cardapio.destroy');
+
 });
 
 // Rotas para ItensCardapio

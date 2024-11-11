@@ -70,12 +70,11 @@ class CardapioController extends Controller
 
     // Método para exibir um cardápio específico
     public function index($empresaId)
-    {
-        // Busca os cardápios da empresa
-        $cardapios = Cardapio::where('empresa_id', $empresaId)->get();
+{
+    $cardapios = Cardapio::where('empresa_id', $empresaId)->get();
+    return view('cardapio.index', compact('cardapios', 'empresaId'));
+}
 
-        return view('cardapio.index', compact('cardapios', 'empresaId'));
-    }
 
     // Formulário de edição do cardápio
     public function edit($cardapioId)

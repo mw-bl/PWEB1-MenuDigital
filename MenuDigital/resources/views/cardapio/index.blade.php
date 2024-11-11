@@ -26,10 +26,10 @@
                     <td>{{ $cardapio->descricao }}</td>
                     <td>
                         <!-- Botão para editar -->
-                        <a href="{{ route('cardapio.edit', ['cardapioId' => $cardapio->id_cardapio]) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{{ route('cardapio.edit', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" class="btn btn-warning btn-sm">Editar</a>
 
                         <!-- Formulário para excluir -->
-                        <form action="{{ route('cardapio.destroy', ['cardapioId' => $cardapio->id_cardapio]) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('cardapio.destroy', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este cardápio?')">Excluir</button>
