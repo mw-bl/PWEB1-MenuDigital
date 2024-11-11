@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Empresa</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Custom CSS -->
     <style>
-        /* Full-page flex container */
         body, html {
             height: 100%;
             margin: 0;
@@ -20,14 +16,12 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Flex container for left and right sections */
         .main-container {
             display: flex;
             width: 100%;
             height: 100%;
         }
 
-        /* Left section for image */
         .left-section {
             flex: 1;
             display: flex;
@@ -37,7 +31,6 @@
             background-color: #D92621;
         }
 
-        /* Right section for form */
         .right-section {
             flex: 1;
             display: flex;
@@ -47,13 +40,11 @@
             background-color: #D92621;
         }
 
-        /* Image styling */
         .left-section img {
             max-width: 80%;
             border-radius: 15px;
         }
 
-        /* Card styling */
         .card {
             border-radius: 20px;
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
@@ -71,7 +62,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Form header styling */
         .form-header {
             font-size: 2.5rem;
             color: #333333;
@@ -79,7 +69,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Input group styling */
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
@@ -112,13 +101,12 @@
             color: black;
         }
 
-        /* Button styling */
         .btn-primary {
             background-color: #D92621;
             border: none;
             border-radius: 40px;
             transition: background-color 0.3s ease;
-            width: 200px !important; /* Força a largura */
+            width: 200px !important;
             height: 60px;
             font-size: 2rem;
             font-weight: bolder;
@@ -126,14 +114,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto; /* Centraliza o botão */
+            margin: 0 auto;
         }
 
         .btn-primary:hover {
             background-color: #D92621;
         }
 
-        /* Button for login link */
         .btn-secondary {
             background-color: transparent;
             border: none;
@@ -153,24 +140,20 @@
 <body>
 
 <div class="main-container">
-    <!-- Left section with image -->
     <div class="left-section">
         <img src="{{ asset('imagem_telas_de_login.png') }}" alt="Imagem ilustrativa da empresa">
     </div>
 
-    <!-- Right section with form -->
     <div class="right-section">
         <div class="card">
             <div class="form-header text-center"><h1>Registro</h1></div>
 
-            <!-- Exibe mensagens de sucesso -->
             @if (session('status'))
                 <div class="alert alert-success">
                     {{ session('status') }}
                 </div>
             @endif
 
-            <!-- Exibe mensagens de erro -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -184,61 +167,51 @@
             <form action="{{ route('empresa.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <!-- Nome -->
                 <div class="mb-3 input-group">
                     <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome da Empresa" value="{{ old('nome') }}" required>
                     <span class="input-group-text material-icons">business</span>
                 </div>
 
-                <!-- CNPJ -->
                 <div class="mb-3 input-group">
                     <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}" required>
                     <span class="input-group-text material-icons">account_balance</span>
                 </div>
 
-                <!-- Email -->
                 <div class="mb-3 input-group">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
                     <span class="input-group-text material-icons">email</span>
                 </div>
 
-                <!-- Telefone -->
                 <div class="mb-3 input-group">
                     <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Telefone" value="{{ old('telefone') }}" required>
                     <span class="input-group-text material-icons">phone</span>
                 </div>
 
-                <!-- Endereço -->
                 <div class="mb-3 input-group">
                     <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço" value="{{ old('endereco') }}" required>
                     <span class="input-group-text material-icons">location_on</span>
                 </div>
 
-                <!-- Senha -->
                 <div class="mb-3 input-group">
                     <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
                     <span class="input-group-text material-icons">lock</span>
                 </div>
 
-                <!-- Confirmar Senha -->
                 <div class="mb-3 input-group">
                     <input type="password" class="form-control" id="senha_confirmation" name="senha_confirmation" placeholder="Confirmar Senha" required>
                     <span class="input-group-text material-icons">lock</span>
                 </div>
 
-                <!-- Botão de Cadastro -->
                 <button type="submit" class="btn btn-primary w-100 mt-4">
                     <span class=""></span> Registrar
                 </button>
             </form>
 
-            <!-- Botão para página de login -->
             <a href="{{ route('login') }}" class="btn-secondary">Já possui uma conta? Ir para Login</a>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

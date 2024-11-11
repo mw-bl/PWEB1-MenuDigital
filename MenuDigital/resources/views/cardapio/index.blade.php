@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Cardápios da Empresa</h1>
 
-    <!-- Mensagem de sucesso -->
+    
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -25,13 +25,13 @@
                 <tr>
                     <td>{{ $cardapio->descricao }}</td>
                     <td>
-                        <!-- Link para visualizar os itens do cardápio -->
+                        
                         <a href="{{ route('cardapio.itens', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" class="btn btn-info btn-sm">Visualizar Itens</a>
 
-                        <!-- Botão para editar -->
+                        
                         <a href="{{ route('cardapio.edit', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" class="btn btn-warning btn-sm">Editar</a>
 
-                        <!-- Formulário para excluir -->
+                        
                         <form action="{{ route('cardapio.destroy', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')

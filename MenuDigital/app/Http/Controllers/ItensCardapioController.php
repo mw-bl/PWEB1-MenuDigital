@@ -15,7 +15,6 @@ class ItensCardapioController extends Controller
         return view('itens.create', compact('cardapio', 'empresaId'));
     }
 
-    // Método para armazenar o novo item
     public function store(Request $request, $empresaId, $cardapioId)
     {
         $request->validate([
@@ -35,14 +34,12 @@ class ItensCardapioController extends Controller
                          ->with('success', 'Item criado com sucesso!');
     }
 
-    // Método para editar um item
     public function edit($empresaId, $cardapioId, $itemId)
-{
-    $item = ItensCardapio::findOrFail($itemId);
-    return view('itens.edit', compact('item', 'empresaId', 'cardapioId'));
-}
+    {
+        $item = ItensCardapio::findOrFail($itemId);
+        return view('itens.edit', compact('item', 'empresaId', 'cardapioId'));
+    }
 
-    // Método para atualizar um item
     public function update(Request $request, $empresaId, $cardapioId, $itemId)
     {
         $request->validate([
@@ -59,7 +56,6 @@ class ItensCardapioController extends Controller
                          ->with('success', 'Item atualizado com sucesso!');
     }
 
-    // Método para excluir um item
     public function destroy($empresaId, $cardapioId, $itemId)
     {
         $item = ItensCardapio::findOrFail($itemId);
@@ -69,23 +65,18 @@ class ItensCardapioController extends Controller
                          ->with('success', 'Item excluído com sucesso!');
     }
 
-    
-
     public function index($empresaId)
     {
-    $empresa = Empresa::findOrFail($empresaId);
-    
-    // Buscar todos os cardápios da empresa com os itens relacionados
-    $cardapios = $empresa->cardapios()->with('itens')->get();
+        $empresa = Empresa::findOrFail($empresaId);
+        $cardapios = $empresa->cardapios()->with('itens')->get();
 
-    return view('cardapios.index', compact('cardapios', 'empresaId'));
-}
+        return view('cardapios.index', compact('cardapios', 'empresaId'));
+    }
 
-public function showItens($empresaId, $cardapioId)
-{
-    $cardapio = Cardapio::with('itens')->findOrFail($cardapioId);
+    public function showItens($empresaId, $cardapioId)
+    {
+        $cardapio = Cardapio::with('itens')->findOrFail($cardapioId);
 
-    return view('itens.index', compact('cardapio', 'empresaId'));
-}
-
+        return view('itens.index', compact('cardapio', 'empresaId'));
+    }
 }

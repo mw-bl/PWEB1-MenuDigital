@@ -10,16 +10,13 @@ use App\Models\User;
 
 class EmpresaController extends Controller
 {
-    // Método para exibir o formulário de cadastro
     public function cadastro()
     {
         return view('empresa.cadastro');
     }
 
-    // Método para armazenar a empresa no banco
     public function store(Request $request)
     {
-        // Validação dos dados
         $request->validate([
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:14|unique:empresas',
@@ -29,7 +26,6 @@ class EmpresaController extends Controller
             'senha' => 'required|string|min:3|confirmed',
         ]);
 
-        // Criar e salvar a nova empresa
         $empresa = Empresa::create([
             'nome' => $request->nome,
             'cnpj' => $request->cnpj,
@@ -39,20 +35,16 @@ class EmpresaController extends Controller
             'senha' => Hash::make($request->senha),
         ]);
 
-        // Redirecionar para a página de gerenciamento e criação de cardápios
         return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresa->id_empresa])->with('success', 'Empresa cadastrada com sucesso!');
     }
 
-    // Método para exibir o formulário de login
     public function loginForm()
     {
         return view('empresa.login');
     }
 
-    // Método para autenticar a empresa
     public function login(Request $request)
     {
-        // Validação dos dados
         $request->validate([
             'email' => 'required|email',
             'senha' => 'required',
@@ -60,32 +52,31 @@ class EmpresaController extends Controller
             'email.required' => 'Esse campo de email é obrigatório',
             'email.email' => 'Esse campo tem que ter um email válido',
             'password.required' => 'Esse campo password é obrigatório',
-            // 'password.min' => 'Esse campo tem que ter no mínimo :min caracteres'
-          ]);
+        ]);
 
-          $empresa = Empresa::where('email', $request->input('email'))->first();
+        $empresa = Empresa::where('email', $request->input('email'))->first();
 
-          if (!isset($empresa)) {
+        if (!isset($empresa)) {
             return redirect()->route('empresa.login')->withErrors(['error' => 'Email ou senha inválidos']);
         }
 
-          if (!$empresa) {
+        if (!$empresa) {
             return redirect()->route('empresa.login')->withErrors(['error' => 'Email or password invalid']);
-          }
+        }
 
-          if (!Hash::check($request->input('senha'), $empresa->senha)) {
+        if (!Hash::check($request->input('senha'), $empresa->senha)) {
             return redirect()->route('empresa.login')->withErrors(['error' => 'Email or password invalid']);
-          }
+        }
 
-          Auth::loginUsingId($empresa->id_empresa);
+        Auth::loginUsingId($empresa->id_empresa);
 
-          return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresa->id_empresa])->with('success', 'Logged in');
+        return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresa->id_empresa])->with('success', 'Logged in');
     }
 
     public function destroy()
-  {
-    Auth::logout();
+    {
+        Auth::logout();
 
-    return redirect()->route('empresa.login');
-  }
+        return redirect()->route('empresa.login');
+    }
 }

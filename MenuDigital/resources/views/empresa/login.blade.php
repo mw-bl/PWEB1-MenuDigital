@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login de Empresa</title>
-    <!-- Bootstrap CSS -->
+    <title>Cadastro de Empresa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* Estilos principais */
         body, html {
             height: 100%;
             margin: 0;
@@ -37,7 +35,7 @@
             flex: 1;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             padding: 2rem;
             background-color: #D92621;
         }
@@ -53,21 +51,34 @@
             padding: 2rem;
             max-width: 500px;
             width: 100%;
+            margin-right: 10rem;
             background-color: #FFFFFF;
         }
 
         .card h1 {
-            font-size: 2rem;
+            font-size: 3rem;
             color: #333333;
             font-weight: bold;
             margin-bottom: 1rem;
+        }
+
+        .form-header {
+            font-size: 2.5rem;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
 
         .form-control {
             height: 50px;
             border: 2px solid #E0E0E0;
             border-radius: 10px;
-            padding-left: 1rem;
+            padding-left: 3rem;
             font-size: 1rem;
             color: #333333;
             transition: border-color 0.3s;
@@ -79,63 +90,70 @@
             outline: none;
         }
 
+        .input-group .input-group-text {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            color: black;
+        }
+
         .btn-primary {
             background-color: #D92621;
             border: none;
             border-radius: 40px;
             transition: background-color 0.3s ease;
-            width: 100%;
-            height: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            width: 200px !important;
+            height: 60px;
+            font-size: 2rem;
+            font-weight: bolder;
             padding: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 1rem;
+            margin: 0 auto;
         }
 
         .btn-primary:hover {
-            background-color: #B71C1C;
+            background-color: #D92621;
         }
 
-        .link-register {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .link-register a {
+        .btn-secondary {
+            background-color: transparent;
+            border: none;
             color: #D92621;
-            text-decoration: none;
-            font-weight: bold;
+            text-decoration: underline;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: block;
+            text-align: center;
         }
 
-        .link-register a:hover {
-            text-decoration: underline;
+        .btn-secondary:hover {
+            color: #C21E1B;
         }
     </style>
 </head>
 <body>
 
 <div class="main-container">
-    <!-- Left section with image -->
     <div class="left-section">
         <img src="{{ asset('imagem_telas_de_login.png') }}" alt="Imagem ilustrativa da empresa">
     </div>
 
-    <!-- Right section with login form -->
     <div class="right-section">
         <div class="card">
-            <h1 class="text-center">Login</h1>
+            <div class="form-header text-center"><h1>Registro</h1></div>
 
-            <!-- Exibe mensagens de sucesso -->
-            @if (session('success'))
+            @if (session('status'))
                 <div class="alert alert-success">
-                    {{ session('success') }}
+                    {{ session('status') }}
                 </div>
             @endif
 
-            <!-- Exibe mensagens de erro -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -146,28 +164,54 @@
                 </div>
             @endif
 
-            <form action="{{ route('empresa.login') }}" method="POST">
+            <form action="{{ route('empresa.store') }}" method="POST">
                 @csrf
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="mb-3 input-group">
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome da Empresa" value="{{ old('nome') }}" required>
+                    <span class="input-group-text material-icons">business</span>
                 </div>
-                <div class="mb-3">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="senha" name="senha" required>
+
+                <div class="mb-3 input-group">
+                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}" required>
+                    <span class="input-group-text material-icons">account_balance</span>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+
+                <div class="mb-3 input-group">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                    <span class="input-group-text material-icons">email</span>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Telefone" value="{{ old('telefone') }}" required>
+                    <span class="input-group-text material-icons">phone</span>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço" value="{{ old('endereco') }}" required>
+                    <span class="input-group-text material-icons">location_on</span>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
+                    <span class="input-group-text material-icons">lock</span>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <input type="password" class="form-control" id="senha_confirmation" name="senha_confirmation" placeholder="Confirmar Senha" required>
+                    <span class="input-group-text material-icons">lock</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-4">
+                    <span class=""></span> Registrar
+                </button>
             </form>
 
-            <!-- Link para a página de cadastro -->
-            <div class="link-register">
-    <p>Não tem uma conta? <a href="{{ route('empresa.cadastro') }}">Cadastre-se aqui</a></p>
-</div>
+            <a href="{{ route('login') }}" class="btn-secondary">Já possui uma conta? Ir para Login</a>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

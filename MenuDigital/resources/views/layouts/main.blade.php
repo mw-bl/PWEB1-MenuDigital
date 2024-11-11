@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Estilo básico do layout */
         body {
             font-family: Arial, sans-serif;
             background-color: #F5F5F5;
             color: #333;
         }
 
-        /* Barra de navegação */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -45,7 +43,6 @@
             background-color: #cc0000;
         }
 
-        /* Footer */
         footer {
             background-color: #333;
             color: #fff;
@@ -60,24 +57,20 @@
 </head>
 <body>
 
-    <!-- Barra de navegação -->
     <div class="navbar">
         <div class="logo-navbar">
             <img src="{{ asset('logo2.png') }}" alt="Imagem ilustrativa da empresa" height="40">
         </div>
         <div class="menu">
-            <!-- Botões de navegação -->
             <a href="{{ route('empresa.login') }}">Entrar</a>
             <a href="{{ route('empresa.cadastro') }}">Cadastrar Empresa</a>
         </div>
     </div>
 
-    <!-- Conteúdo da página -->
     <div class="container mt-5">
         @yield('content')
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2024 GoMenu. Todos os direitos reservados.</p>
     </footer>
