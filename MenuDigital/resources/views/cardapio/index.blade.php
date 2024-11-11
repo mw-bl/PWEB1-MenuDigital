@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <div class="container">
@@ -25,6 +25,9 @@
                 <tr>
                     <td>{{ $cardapio->descricao }}</td>
                     <td>
+                        <!-- Link para visualizar os itens do cardápio -->
+                        <a href="{{ route('cardapio.itens', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" class="btn btn-info btn-sm">Visualizar Itens</a>
+
                         <!-- Botão para editar -->
                         <a href="{{ route('cardapio.edit', ['empresaId' => $empresaId, 'cardapioId' => $cardapio->id_cardapio]) }}" class="btn btn-warning btn-sm">Editar</a>
 

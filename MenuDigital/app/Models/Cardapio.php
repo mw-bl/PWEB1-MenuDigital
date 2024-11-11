@@ -21,13 +21,11 @@ class Cardapio extends Model
 
     public function empresa()
     {
-        // Corrigir o nome da chave estrangeira
         return $this->belongsTo(Empresa::class, 'fk_Empresa_id_empresa');
     }
 
-    // Relacionamento com os Itens
     public function itens()
     {
-        return $this->hasMany(ItensCardapio::class, 'fk_Cardapio_id_cardapio', 'id_cardapio');
+        return $this->hasMany(ItensCardapio::class, 'fk_Cardapio_id_cardapio');
     }
 }

@@ -20,8 +20,12 @@ class ItensCardapio extends Model
         'fk_Cardapio_id_cardapio',
     ];
 
+   
+
     public function cardapio()
     {
         return $this->belongsTo(Cardapio::class, 'fk_Cardapio_id_cardapio');
     }
 }
+
+

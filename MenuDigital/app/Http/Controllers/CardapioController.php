@@ -65,14 +65,17 @@ class CardapioController extends Controller
         $empresaId = Auth::user()->id_empresa; // Assumindo que a empresa está logada
         $cardapios = Cardapio::where('fk_Empresa_id_empresa', $empresaId)->get();
         
-        return view('cardapio.manage_and_create', compact('cardapios'));
+        return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresaId]);
+
     }
 
     // Método para exibir um cardápio específico
-    public function index($empresaId)
+    public function index()
 {
-    $cardapios = Cardapio::where('empresa_id', $empresaId)->get();
-    return view('cardapio.index', compact('cardapios', 'empresaId'));
+    // Pega todos os cardápios
+    $cardapios = Cardapio::with('itens', 'empresa')->get(); // Carrega também os itens e a empresa
+
+    return view('welcome', compact('cardapios'));
 }
 
 
@@ -105,8 +108,18 @@ class CardapioController extends Controller
         $cardapio->save();
 
         return redirect()->route('cardapio.index', ['empresaId' => $cardapio->empresa_id])
-                         ->with('success', 'Cardápio atualizado com sucesso!');
+                 ->with('success', 'Cardápio atualizado com sucesso!');
+
     }
+
+    public function itens($empresaId, $cardapioId)
+{
+    // Obtenha os itens do cardápio. Supondo que você tenha uma relação entre Cardápio e Itens
+    $cardapio = Cardapio::findOrFail($cardapioId);
+    $itens = $cardapio->itens; // Isso pressupõe que você tenha uma relação de itens no seu model Cardapio
+
+    return view('cardapio.itens', compact('cardapio', 'itens', 'empresaId'));
+}
 
     // Excluir cardápio
     public function destroy($cardapioId)

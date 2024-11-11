@@ -5,7 +5,8 @@
         <h2>Criar e Gerenciar Cardápio</h2>
 
         <!-- Formulário de criação do cardápio -->
-        <form id="cardapio-form" action="{{ route('cardapio.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="cardapio-form" action="{{ route('cardapio.store', ['empresaId' => Auth::user()->id_empresa]) }}" method="POST" enctype="multipart/form-data">
+
             @csrf
 
             <!-- Nome do Cardápio -->

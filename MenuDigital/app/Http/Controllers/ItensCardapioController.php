@@ -5,72 +5,87 @@ namespace App\Http\Controllers;
 use App\Models\ItensCardapio;
 use App\Models\Cardapio;
 use Illuminate\Http\Request;
+use App\Models\Empresa;
 
 class ItensCardapioController extends Controller
 {
-    public function index()
+    public function create($empresaId, $cardapioId)
     {
-        $itens = ItensCardapio::all();
-        return response()->json($itens);
+        $cardapio = Cardapio::findOrFail($cardapioId);
+        return view('itens.create', compact('cardapio', 'empresaId'));
     }
 
-    public function store(Request $request)
-{
-    // Validação
-    $request->validate([
-        'descricao' => 'required|string|max:500',
-        'link_imagem' => 'required|image|mimes:jpeg,png,jpg|max:10000',
-        'nome_produto.*' => 'required|string|max:500',
-        'descricao_produto.*' => 'required|string|max:500',
-        'preco.*' => 'required|numeric',
-        'link_imagem_itens.*' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
-    ]);
-
-    // Criação do Cardápio
-    $imagePath = $request->file('link_imagem')->store('cardapios', 'public');
-    $cardapio = Cardapio::create([
-        'descricao' => $request->descricao,
-        'imagem' => $imagePath,
-    ]);
-
-    // Criação dos Itens do Cardápio
-    foreach ($request->nome_produto as $index => $nomeProduto) {
-        // Criação da imagem do produto, se houver
-        $itemImagePath = null;
-        if ($request->hasFile('link_imagem_itens') && isset($request->link_imagem_itens[$index])) {
-            $itemImagePath = $request->file('link_imagem_itens')[$index]->store('itens_cardapio', 'public');
-        }
-
-        // Criação de cada item
-        ItensCardapio::create([
-            'nome_produto' => $nomeProduto,
-            'descricao' => $request->descricao_produto[$index],
-            'preco' => $request->preco[$index],
-            'imagem' => $itemImagePath,
-            'fk_Cardapio_id_cardapio' => $cardapio->id_cardapio,
+    // Método para armazenar o novo item
+    public function store(Request $request, $empresaId, $cardapioId)
+    {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'preco' => 'required|numeric',
         ]);
+
+        $cardapio = Cardapio::findOrFail($cardapioId);
+
+        $item = new ItensCardapio();
+        $item->nome = $request->nome;
+        $item->preco = $request->preco;
+        $item->cardapio_id = $cardapio->id_cardapio;
+        $item->save();
+
+        return redirect()->route('cardapio.itens', ['empresaId' => $empresaId, 'cardapioId' => $cardapioId])
+                         ->with('success', 'Item criado com sucesso!');
     }
 
-    return response()->json(['success' => true, 'message' => 'Cardápio e itens criados com sucesso.']);
+    // Método para editar um item
+    public function edit($empresaId, $cardapioId, $itemId)
+{
+    $item = ItensCardapio::findOrFail($itemId);
+    return view('itens.edit', compact('item', 'empresaId', 'cardapioId'));
 }
 
-
-    public function show($id)
+    // Método para atualizar um item
+    public function update(Request $request, $empresaId, $cardapioId, $itemId)
     {
-        $item = ItensCardapio::findOrFail($id);
-        return response()->json($item);
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'preco' => 'required|numeric',
+        ]);
+
+        $item = ItensCardapio::findOrFail($itemId);
+        $item->nome = $request->nome;
+        $item->preco = $request->preco;
+        $item->save();
+
+        return redirect()->route('cardapio.itens', ['empresaId' => $empresaId, 'cardapioId' => $cardapioId])
+                         ->with('success', 'Item atualizado com sucesso!');
     }
 
-    public function update(Request $request, $id)
+    // Método para excluir um item
+    public function destroy($empresaId, $cardapioId, $itemId)
     {
-        $item = ItensCardapio::findOrFail($id);
-        $item->update($request->all());
-        return response()->json($item);
+        $item = ItensCardapio::findOrFail($itemId);
+        $item->delete();
+
+        return redirect()->route('cardapio.itens', ['empresaId' => $empresaId, 'cardapioId' => $cardapioId])
+                         ->with('success', 'Item excluído com sucesso!');
     }
 
-    public function destroy($id)
+    
+
+    public function index($empresaId)
     {
-        ItensCardapio::destroy($id);
-        return response()->json(['message' => 'Item deletado com sucesso']);
-    }
+    $empresa = Empresa::findOrFail($empresaId);
+    
+    // Buscar todos os cardápios da empresa com os itens relacionados
+    $cardapios = $empresa->cardapios()->with('itens')->get();
+
+    return view('cardapios.index', compact('cardapios', 'empresaId'));
+}
+
+public function showItens($empresaId, $cardapioId)
+{
+    $cardapio = Cardapio::with('itens')->findOrFail($cardapioId);
+
+    return view('itens.index', compact('cardapio', 'empresaId'));
+}
+
 }
