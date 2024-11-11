@@ -30,7 +30,7 @@ class EmpresaController extends Controller
         ]);
 
         // Criar e salvar a nova empresa
-        Empresa::create([
+        $empresa = Empresa::create([
             'nome' => $request->nome,
             'cnpj' => $request->cnpj,
             'email' => $request->email,
@@ -40,7 +40,7 @@ class EmpresaController extends Controller
         ]);
 
         // Redirecionar para a página de gerenciamento e criação de cardápios
-        return redirect()->route('cardapio.manageAndCreate')->with('success', 'Empresa cadastrada com sucesso!');
+        return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresa->id_empresa])->with('success', 'Empresa cadastrada com sucesso!');
     }
 
     // Método para exibir o formulário de login
@@ -75,7 +75,7 @@ class EmpresaController extends Controller
 
           Auth::loginUsingId($empresa->id_empresa);
 
-          return redirect()->route('cardapio.manageAndCreate')->with('success', 'Logged in');
+          return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresa->id_empresa])->with('success', 'Logged in');
     }
 
     public function destroy()

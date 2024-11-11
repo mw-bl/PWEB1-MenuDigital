@@ -16,7 +16,7 @@ class CardapioController extends Controller
     
 
     // Método para armazenar um novo cardápio
-    public function store(Request $request)
+    public function store(Request $request, $empresaId)
     {
         $validated = $request->validate([
             'descricao' => 'required|string|max:500',
@@ -26,8 +26,6 @@ class CardapioController extends Controller
             'preco.*' => 'required|numeric',
             'imagem_itens.*' => 'required|image|mimes:jpeg,png,jpg|max:10000'
         ]);
-
-        $empresaId = Auth::user()->id_empresa;
 
         // Upload da imagem do cardápio
         $imagePath = $request->file('imagem')->store('cardapios', 'public');
@@ -56,8 +54,9 @@ class CardapioController extends Controller
             }
         }
 
-        return redirect()->route('cardapio.index')->with('success', 'Cardápio e itens criados com sucesso.');
+        return redirect()->route('cardapio.manage_and_create', ['empresaId' => $empresaId]);
     }
+
 
     // Método para exibir a página de gerenciamento e criação de cardápios
     public function manageAndCreate()
@@ -130,4 +129,11 @@ class CardapioController extends Controller
         return redirect()->route('cardapio.index', ['empresaId' => $cardapio->empresa_id])
                          ->with('success', 'Cardápio excluído com sucesso!');
     }
+
+    public function create($empresaId)
+    {
+        $empresa = Empresa::findOrFail($empresaId); // Usa 'id_empresa' como chave primária
+        return view('cardapio.create', compact('empresa'));
+    }
+
 }

@@ -22,13 +22,12 @@ Route::post('/logout', [EmpresaController::class, 'destroy'])->name('empresa.log
 
 
 
-// Rotas para Cardapio
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [CardapioController::class, 'index']);
-    Route::get('/empresa/{empresaId}/cardapio/manageAndCreate', [CardapioController::class, 'create'])->name('cardapio.manageAndCreate');
-
+    
+    // Exemplo de definição de rota
     Route::post('/empresa/{empresaId}/cardapio', [CardapioController::class, 'store'])->name('cardapio.store');
-
+    Route::get('/empresa/{empresaId}/cardapio/manageAndCreate', [CardapioController::class, 'create'])->name('cardapio.manage_and_create');
     Route::get('/empresas/{empresaId}/cardapios/{cardapioId}/itens', [CardapioController::class, 'itens'])->name('cardapio.itens');
 
     Route::get('/empresa/{empresaId}/cardapio/{cardapioId}/edit', [CardapioController::class, 'edit'])->name('cardapio.edit');
